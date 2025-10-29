@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class HangmanGame {
@@ -20,16 +21,18 @@ public class HangmanGame {
         while(playing)
         {
             // game played in here
-            String word = ""; // the randomly picked word
+            String word = "yes"; // the randomly picked word
             char guess = 'e';  // the guess
             char[] currentProgress = new char[word.length()];
 
             // each guess either adds to mistakes
             if(word.indexOf(guess) == -1) {
+                IO.println("wrong");
                 mistakes++;
             }
             // or is added to currentProgress
             else {
+                IO.println("right");
                 // probably use indexOf and add letter to currentProgress at that index
                 currentProgress[0] = 'y';
             }
@@ -37,7 +40,7 @@ public class HangmanGame {
             if(mistakes == 7) {
                 playing = false;
                 IO.println("Sorry, no more guesses left. Game over.");
-            } else if(currentProgress.toString().equals(word)) {
+            } else if(Arrays.equals(currentProgress, word.toCharArray())) {
                 playing = false;
                 IO.println("Congrats! You won the game.");
             }
