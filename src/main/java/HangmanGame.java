@@ -10,13 +10,15 @@ public class HangmanGame {
         // array of words, picked at random (or one word)
         // give the person the length of the word
         // prompt the user for a guess
-        String word = "word";
-        char guessLetter;
+        String word = "word";   // Temp word
+        char guessLetter;       //The user's current guess letter
         guessLetter = '_';
-        List<Character> incorrectGuesses = new ArrayList<>();
-        char[] correctGuess = new char[word.length()];
-        int guessesLeft = 7;
-        while(guessesLeft > 0){
+        List<Character> incorrectGuesses = new ArrayList<>();       //the list of the incorrect characters
+        char[] correctGuess = new char[word.length()];      //The Array of the guess so far
+        int guessesLeft = 7;        //The amount of incorrect guesses the user has left
+        boolean playing = true;     //denotes if we are still playing the game
+
+        while(guessesLeft > 0 && playing){
             boolean correct = false;
             while (!correct){
                 String guess = IO.readln("Please enter a one letter guess: ");
@@ -29,51 +31,30 @@ public class HangmanGame {
                 }
             }
             boolean guessFound = false;
-            for(int i = 0; i < word.length(); i++){
-                if (word.charAt(i) == guessLetter){
+            for(int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == guessLetter) {
                     correctGuess[i] = word.charAt(i);
                     guessFound = true;
                     IO.println(Arrays.toString(correctGuess));
+                    if (Arrays.equals(correctGuess, word.toCharArray())) {
+                        playing = false;
+                        IO.println("Congrats! You won the game.");
+                    }
                 }
             }
-            if (!guessFound){
+            if (!guessFound) {
                 IO.println("Your guess was incorrect.");
                 guessesLeft -= 1;
                 incorrectGuesses.add(guessLetter);
                 IO.println("Guesses left: " + guessesLeft);
                 IO.println("Letters guessed: " + incorrectGuesses);
-
+                if (guessesLeft == 0){
+                    IO.println("No more guesses left, game over.");
+                }
             }
+
 
         }
-        boolean playing = true;
-        int mistakes = 0;
-        while(playing)
-        {
-            // game played in here
-            String word = "yes"; // the randomly picked word
-            char guess = 'e';  // the guess
-            char[] currentProgress = new char[word.length()];
 
-            // each guess either adds to mistakes
-            if(word.indexOf(guess) == -1) {
-                IO.println("wrong");
-                mistakes++;
-            }
-            // or is added to currentProgress
-            else {
-                IO.println("right");
-                // probably use indexOf and add letter to currentProgress at that index
-                currentProgress[0] = 'y';
-            }
-
-            if(mistakes == 7) {
-                playing = false;
-                IO.println("Sorry, no more guesses left. Game over.");
-            } else if(Arrays.equals(currentProgress, word.toCharArray())) {
-                playing = false;
-                IO.println("Congrats! You won the game.");
-            }
-        }
     }
 }
