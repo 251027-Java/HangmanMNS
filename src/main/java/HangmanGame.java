@@ -46,11 +46,34 @@ public class HangmanGame {
             }
 
         }
+        boolean playing = true;
+        int mistakes = 0;
+        while(playing)
+        {
+            // game played in here
+            String word = "yes"; // the randomly picked word
+            char guess = 'e';  // the guess
+            char[] currentProgress = new char[word.length()];
 
+            // each guess either adds to mistakes
+            if(word.indexOf(guess) == -1) {
+                IO.println("wrong");
+                mistakes++;
+            }
+            // or is added to currentProgress
+            else {
+                IO.println("right");
+                // probably use indexOf and add letter to currentProgress at that index
+                currentProgress[0] = 'y';
+            }
 
-        // if right add it in the word with dashes
-        // if not, add to the bucket list and tally incorrect guesses and incorrect guesses remaining
-        // if person runout of guesses game ends
-        // if guesses the word correctly the person wins and game ends
+            if(mistakes == 7) {
+                playing = false;
+                IO.println("Sorry, no more guesses left. Game over.");
+            } else if(Arrays.equals(currentProgress, word.toCharArray())) {
+                playing = false;
+                IO.println("Congrats! You won the game.");
+            }
+        }
     }
 }
