@@ -12,7 +12,5 @@ public class HangmanGame {
         // Manu
         // if person runout of guesses game ends
         // if guesses the word correctly the person wins and game ends
-
-
     }
 }
