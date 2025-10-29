@@ -16,18 +16,12 @@ public class HangmanGame {
         Random rand = new Random();
         String word = words[rand.nextInt(words.length)];
 
-        /*Scanner scanner = new Scanner(System.in);
-        // array of words, picked at random
-        Random random = new Random();
-        String[] myArray = {"spiderman", "superman", "ironman", "batman", "thor", "flash"};
-        int randomIndex = random.nextInt(myArray.length);
-        String word = myArray[randomIndex];*/
 
         // create an array size using the previous int
-        String[] blankWord = new String[word.length()];
+        char[] blankWord = new char[word.length()];      //The Array of the guess so far
 
         //Fill each element in array with "_"
-        String fillChar = "_";
+        char fillChar = '_';
         Arrays.fill(blankWord, fillChar);
 
         // Print out blankWord
@@ -61,10 +55,10 @@ public class HangmanGame {
             boolean guessFound = false;
             for(int i = 0; i < word.length(); i++) {
                 if (word.charAt(i) == guessLetter) {
-                    correctGuess[i] = word.charAt(i);
+                    blankWord[i] = word.charAt(i);
                     guessFound = true;
-                    IO.println(Arrays.toString(correctGuess));
-                    if (Arrays.equals(correctGuess, word.toCharArray())) {
+                    IO.println(Arrays.toString(blankWord));
+                    if (Arrays.equals(blankWord, word.toCharArray())) {
                         playing = false;
                         IO.println("Congrats! You won the game.");
                     }
