@@ -44,19 +44,15 @@ public class HangmanGame {
         while(guessesLeft > 0 && playing){
             boolean correct = false;
 
-            //Verifies that the entry of teh character was correct
+            //Verifies that the entry of the character was correct
             while (!correct) {
                 String guess = IO.readln("Please enter a one letter guess: ");
                 char enteredChar = guess.charAt(0);
                 Pattern p = Pattern.compile("[^a-z]");
                 Matcher m = p.matcher(guess);
-                if (Character.isDigit(enteredChar)) {
+                if (m.find()) {
                     IO.println("Your guess was invalid, please guess again");
-                } else if (guess.length() != 1) {
-                    IO.println("Your guess was invalid, please guess again");
-                } else if ((m.find())){
-                    IO.println("Your guess was invalid, please guess again");
-                }else{
+                } else{
                     correct = true;
                     guessLetter = guess.charAt(0);
                 }
