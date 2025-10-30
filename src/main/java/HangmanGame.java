@@ -44,19 +44,17 @@ public class HangmanGame {
         while(guessesLeft > 0 && playing){
             boolean correct = false;
 
-            //Verifies that the entry of teh character was correct
+            //Verifies that the entry of the character was correct
             while (!correct) {
-                String guess = IO.readln("Please enter a one letter guess: ");
+                String guess = IO.readln("\nPlease enter a one letter guess: ");
                 char enteredChar = guess.charAt(0);
-                Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+                Pattern p = Pattern.compile("[^a-z]");
                 Matcher m = p.matcher(guess);
-                if (Character.isDigit(enteredChar)) {
+                if (m.find()) {
                     IO.println("Your guess was invalid, please guess again");
                 } else if (guess.length() != 1) {
                     IO.println("Your guess was invalid, please guess again");
-                } else if ((m.find())){
-                    IO.println("Your guess was invalid, please guess again");
-                }else{
+                } else{
                     correct = true;
                     guessLetter = guess.charAt(0);
                 }
@@ -99,14 +97,14 @@ public class HangmanGame {
 
                 IO.println(makeDrawing(guessesLeft));
                 incorrectGuesses.add(guessLetter);
-                IO.println(guessesLeft + " more wrong answers and you lose.");
+                IO.println("You have " + guessesLeft + " more wrong guesses.");
                 IO.println("Incorrect guesses: " + incorrectGuesses.toString());
                 IO.println(Arrays.toString(blankWord));
 
                 // if there are no more guesses left, game ends
                 if (guessesLeft == 0){
                     IO.println("No more guesses left, game over.");
-                    IO.println("The word was:" + word);
+                    IO.println("The word was: " + word);
                 }
             }
             IO.println();
