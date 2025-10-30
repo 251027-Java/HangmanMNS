@@ -57,6 +57,7 @@ public class HangmanGame {
                 if (Arrays.equals(guess.toCharArray(), word.toCharArray())) {
                     playing = false;
                     IO.println("Congrats! You won the game.");
+                    return;
                 } else if (m.find()) {
                     IO.println("Your guess was invalid, please guess again");
                 } else if (guess.length() != 1) {
