@@ -2,6 +2,8 @@ import java.nio.file.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +38,7 @@ public class HangmanGame {
         guessLetter = '_';
 
         List<Character> incorrectGuesses = new ArrayList<>();       //the list of the incorrect characters
+        char[] correctGuess = new char[word.length()];      //The Array of the guess so far
 
         int guessesLeft = 7;        //The amount of incorrect guesses the user has left
         boolean playing = true;     //Denotes if we are still playing the game
@@ -46,7 +49,7 @@ public class HangmanGame {
 
             //Verifies that the entry of the character was correct
             while (!correct) {
-                String guess = IO.readln("\nPlease enter a guess: ");
+                String guess = IO.readln("\nPlease enter a one letter guess: ");
                 char enteredChar = guess.charAt(0);
                 Pattern p = Pattern.compile("[^a-z]");
                 Matcher m = p.matcher(guess);
@@ -57,8 +60,6 @@ public class HangmanGame {
                 } else if (m.find()) {
                     IO.println("Your guess was invalid, please guess again");
                 } else if (guess.length() != 1) {
-                    IO.println("Your guess was invalid, please guess again");
-                } else if ((m.find())){
                     IO.println("Your guess was invalid, please guess again");
                 } else if(new String(blankWord).indexOf(enteredChar) != -1 || incorrectGuesses.contains(enteredChar)) {
                     IO.println("You already guessed this letter, please guess again");
