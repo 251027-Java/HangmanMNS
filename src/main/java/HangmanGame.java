@@ -50,11 +50,14 @@ public class HangmanGame {
 
             //Verifies that the entry of the character was correct
             while (!correct) {
-                String guess = IO.readln("\nPlease enter a one letter guess: ");
+                String guess = IO.readln("\nPlease enter a guess: ");
                 char enteredChar = guess.charAt(0);
                 Pattern p = Pattern.compile("[^a-z]");
                 Matcher m = p.matcher(guess);
-                if (m.find()) {
+                if (Arrays.equals(guess.toCharArray(), word.toCharArray())) {
+                    playing = false;
+                    IO.println("Congrats! You won the game.");
+                } else if (m.find()) {
                     IO.println("Your guess was invalid, please guess again");
                 } else if (guess.length() != 1) {
                     IO.println("Your guess was invalid, please guess again");
