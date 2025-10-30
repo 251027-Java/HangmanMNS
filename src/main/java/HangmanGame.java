@@ -71,10 +71,11 @@ public class HangmanGame {
             if (!guessFound) {
                 IO.println("Your guess was incorrect.");
                 guessesLeft -= 1;
+                IO.println(makeDrawing(guessesLeft));
                 incorrectGuesses.add(guessLetter);
                 IO.println(guessesLeft + " more wrong answers and you lose.");
                 IO.println(Arrays.toString(correctGuess));
-                IO.println("Letters guessed: " + incorrectGuesses);
+                IO.println(Arrays.toString(blankWord));
                 if (guessesLeft == 0){
                     IO.println("No more guesses left, game over.");
                 }
