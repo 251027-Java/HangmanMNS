@@ -28,7 +28,11 @@ public class HangmanGame {
         Arrays.fill(blankWord, fillChar);
 
         // Print out blankWord
-        System.out.print(Arrays.toString(blankWord));
+        //System.out.print(Arrays.toString(blankWord));
+        for (char c : blankWord) {
+            System.out.print(c + " ");
+        }
+        System.out.println();
 
 
         char guessLetter;       //The user's current guess letter
@@ -70,13 +74,15 @@ public class HangmanGame {
                     blankWord[i] = word.charAt(i);
                     guessFound = true;
 
-                    IO.println(Arrays.toString(blankWord));
-
-
                     // display
                     IO.println("Your guess was correct.");
                     IO.println(makeDrawing(guessesLeft));
-                    IO.println(Arrays.toString(blankWord));
+
+                    for (char c : blankWord) {
+                        System.out.print(c + " ");
+                    }
+                    System.out.println();
+
                     IO.println("Incorrect guesses: " + incorrectGuesses);
 
                     // if the entire word has been guessed, the game has been won
@@ -99,7 +105,11 @@ public class HangmanGame {
                 incorrectGuesses.add(guessLetter);
                 IO.println("You have " + guessesLeft + " more wrong guesses.");
                 IO.println("Incorrect guesses: " + incorrectGuesses.toString());
-                IO.println(Arrays.toString(blankWord));
+
+                for (char c : blankWord) {
+                    System.out.print(c + " ");
+                }
+                System.out.println();
 
                 // if there are no more guesses left, game ends
                 if (guessesLeft == 0){
