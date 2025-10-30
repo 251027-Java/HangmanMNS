@@ -2,6 +2,8 @@ import java.nio.file.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,9 +24,51 @@ public class HangmanGame {
             // create an array size using the previous int
             char[] blankWord = new char[word.length()];      //The Array of the guess so far
 
-            //Fill each element in array with "_"
-            char fillChar = '_';
-            Arrays.fill(blankWord, fillChar);
+        //Fill each element in array with "_"
+        char fillChar = '_';
+        Arrays.fill(blankWord, fillChar);
+
+        // Print out blankWord
+        //System.out.print(Arrays.toString(blankWord));
+        for (char c : blankWord) {
+            System.out.print(c + " ");
+        }
+        System.out.println();
+
+
+        char guessLetter;       //The user's current guess letter
+        guessLetter = '_';
+
+        List<Character> incorrectGuesses = new ArrayList<>();       //the list of the incorrect characters
+        char[] correctGuess = new char[word.length()];      //The Array of the guess so far
+
+        int guessesLeft = 7;        //The amount of incorrect guesses the user has left
+        boolean playing = true;     //Denotes if we are still playing the game
+
+        //Main loop to continue playing until the word was guessed or there are no guesses left
+        while(guessesLeft > 0 && playing){
+            boolean correct = false;
+
+            //Verifies that the entry of the character was correct
+            while (!correct) {
+                String guess = IO.readln("\nPlease enter a one letter guess: ");
+                char enteredChar = guess.charAt(0);
+                Pattern p = Pattern.compile("[^a-z]");
+                Matcher m = p.matcher(guess);
+                if (Arrays.equals(guess.toCharArray(), word.toCharArray())) {
+                    playing = false;
+                    IO.println("Congrats! You won the game.");
+                    return;
+                } else if (m.find()) {
+                    IO.println("Your guess was invalid, please guess again");
+                } else if (guess.length() != 1) {
+                    IO.println("Your guess was invalid, please guess again");
+                } else if(new String(blankWord).indexOf(enteredChar) != -1 || incorrectGuesses.contains(enteredChar)) {
+                    IO.println("You already guessed this letter, please guess again");
+                } else{
+                    correct = true;
+                    guessLetter = guess.charAt(0);
+                }
 
             // Print out blankWord
             //System.out.print(Arrays.toString(blankWord));
