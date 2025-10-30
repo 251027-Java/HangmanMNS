@@ -5,11 +5,13 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HangmanGame {
     public static void main() throws IOException {
-
         // Getting random word from the word bank
+
         String content = Files.readString(Path.of("src/main/java/Hangman_wordbank.txt"));
 
         String[] words = content.split(",\\s*");
@@ -42,18 +44,23 @@ public class HangmanGame {
         while(guessesLeft > 0 && playing){
             boolean correct = false;
 
-            //Verifies that the entry of the character was correct
-            while (!correct){
+            //Verifies that the entry of teh character was correct
+            while (!correct) {
                 String guess = IO.readln("Please enter a one letter guess: ");
-
-                // guess must be exactly one letter
-                if(guess.length() == 1 && Character.isLetter(guess.charAt(0))) {
+                char enteredChar = guess.charAt(0);
+                Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+                Matcher m = p.matcher(guess);
+                if (Character.isDigit(enteredChar)) {
+                    IO.println("Your guess was invalid, please guess again");
+                } else if (guess.length() != 1) {
+                    IO.println("Your guess was invalid, please guess again");
+                } else if ((m.find())){
+                    IO.println("Your guess was invalid, please guess again");
+                }else{
                     correct = true;
                     guessLetter = guess.charAt(0);
                 }
-                else{
-                    IO.println("Your guess was invalid, please guess again");
-                }
+
             }
 
             //Runs through the word to see if there are any matching iteracies
@@ -65,6 +72,9 @@ public class HangmanGame {
                     blankWord[i] = word.charAt(i);
                     guessFound = true;
 
+                    IO.println(Arrays.toString(blankWord));
+
+
                     // display
                     IO.println("Your guess was correct.");
                     IO.println(makeDrawing(guessesLeft));
@@ -72,6 +82,7 @@ public class HangmanGame {
                     IO.println("Incorrect guesses: " + incorrectGuesses);
 
                     // if the entire word has been guessed, the game has been won
+
                     if (Arrays.equals(blankWord, word.toCharArray())) {
                         playing = false;
                         IO.println("Congrats! You won the game.");
@@ -95,6 +106,7 @@ public class HangmanGame {
                 // if there are no more guesses left, game ends
                 if (guessesLeft == 0){
                     IO.println("No more guesses left, game over.");
+                    IO.println("The word was:" + word);
                 }
             }
             IO.println();
