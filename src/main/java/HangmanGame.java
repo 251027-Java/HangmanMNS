@@ -48,7 +48,7 @@ public class HangmanGame {
             while (!correct) {
                 String guess = IO.readln("Please enter a one letter guess: ");
                 char enteredChar = guess.charAt(0);
-                Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+                Pattern p = Pattern.compile("[^a-z]");
                 Matcher m = p.matcher(guess);
                 if (Character.isDigit(enteredChar)) {
                     IO.println("Your guess was invalid, please guess again");
