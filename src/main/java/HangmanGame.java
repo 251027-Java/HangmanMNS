@@ -1,10 +1,7 @@
 import java.nio.file.*;
 import java.io.IOException;
-import java.util.Random;import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +36,6 @@ public class HangmanGame {
         guessLetter = '_';
 
         List<Character> incorrectGuesses = new ArrayList<>();       //the list of the incorrect characters
-        char[] correctGuess = new char[word.length()];      //The Array of the guess so far
 
         int guessesLeft = 7;        //The amount of incorrect guesses the user has left
         boolean playing = true;     //Denotes if we are still playing the game
@@ -61,6 +57,10 @@ public class HangmanGame {
                     IO.println("Your guess was invalid, please guess again");
                 } else if (guess.length() != 1) {
                     IO.println("Your guess was invalid, please guess again");
+                } else if ((m.find())){
+                    IO.println("Your guess was invalid, please guess again");
+                } else if(new String(blankWord).indexOf(enteredChar) != -1 || incorrectGuesses.contains(enteredChar)) {
+                    IO.println("You already guessed this letter, please guess again");
                 } else{
                     correct = true;
                     guessLetter = guess.charAt(0);
@@ -68,25 +68,27 @@ public class HangmanGame {
 
             }
 
-            //Runs through the word to see if there are any matching iteracies
             boolean guessFound = false;
-            for(int i = 0; i < word.length(); i++) {
-
-                // if the guess was right, update the display
-                if (word.charAt(i) == guessLetter) {
-                    blankWord[i] = word.charAt(i);
-                    guessFound = true;
-
-                    // display
-                    IO.println("Your guess was correct.");
-                    IO.println(makeDrawing(guessesLeft));
-
-                    for (char c : blankWord) {
-                        System.out.print(c + " ");
+            // If guess is right, adds the letter into display
+            if(word.indexOf(guessLetter) != -1)
+            {
+                guessFound = true;
+                //Runs through the word to see if there are any matching iteracies
+                for(int i = 0; i < word.length(); i++)
+                {
+                    if(word.charAt(i) == guessLetter) {
+                        blankWord[i] = word.charAt(i);
                     }
-                    System.out.println();
+                }
 
-                    IO.println("Incorrect guesses: " + incorrectGuesses);
+                // display
+                IO.println("Your guess was correct.");
+                IO.println(makeDrawing(guessesLeft));
+                for (char c : blankWord) {
+                    System.out.print(c + " ");
+                }
+                System.out.println();
+                IO.println("Incorrect guesses: " + incorrectGuesses);
 
                     // if the entire word has been guessed, the game has been won
 
@@ -94,7 +96,7 @@ public class HangmanGame {
                         playing = false;
                         IO.println("Congrats! You won the game.");
                     }
-                }
+
             }
 
             //if the guess was wrong, it lets the users know how many have left and the letters they have chosen
